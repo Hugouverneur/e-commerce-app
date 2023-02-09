@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
+import ListItem from '../../components/ListItem'
 
 export default function ListingScreen() {
   return (
-    <View>
-      <Text>ListingScreen</Text>
-    </View>
+    <ScrollView>
+      <ListItem/>
+    </ScrollView>
   )
 }

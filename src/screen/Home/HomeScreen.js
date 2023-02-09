@@ -1,10 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <ScrollView style={{flex: 1}}>
+      <Text>Test</Text>
+    </ScrollView>
   )
 }
+
+export default HomeScreen
