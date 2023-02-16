@@ -7,7 +7,7 @@ const Categories = () => {
   return (
     <ScrollView style={styles.categories} horizontal>
         {Data.categories.map((category, index) => (
-            <TouchableOpacity style={styles.categoryItemContainer} id={index}>
+            <TouchableOpacity style={styles.categoryItemContainer} index={index}>
                 <FontAwesome5 
                     name={category.icon}
                     style={styles.categoryIcon}
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         padding: 10,
-        marginRight: 15,
+        marginRight: 30,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
