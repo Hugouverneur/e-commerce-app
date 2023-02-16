@@ -3,22 +3,33 @@ import { addDoc, collection, doc, getDoc, getFirestore } from "firebase/firestor
 import { app } from '../../../firebase';
 import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProductScreen() {
   const db = getFirestore(app);
 
+  const productId = 'EzwHQHoR0AH9fMdrPCrJ' // replace id by route id
+
   const [product, setProduct] = useState([]);
+  const [cart, setCart] = useState([])
 
   useEffect(() => {
-    getDoc(doc(db, 'products', 'EzwHQHoR0AH9fMdrPCrJ')) // replace id by route id
+    getDoc(doc(db, 'products', productId))
       .then(docProduct => {
         if (docProduct.exists()) setProduct(docProduct.data());
       });
+    
+    AsyncStorage.getItem('@user_cart').then(value => {
+      if (value) setCart(value)
+    })
+    setCart([...cart, productId])
+    console.log('- - - -');
+    console.log(cart);
   }, [])
 
-  const addToCart = () => {
-    console.log('add cart');
-    // Todo
+  const addToCart = async () => {
+    setCart([...cart, productId]);
+    await AsyncStorage.setItem('@user_cart', JSON.stringify(cart))
   }
 
   const addToFavorite = () => {
