@@ -12,7 +12,7 @@ const Navbar = (props) => {
     <NavigationContainer>
         <Tab.Navigator
             screenOptions={{
-                tabBarStyle: { position: 'absolute', borderTopLeftRadius: 100, borderTopRightRadius: 100},
+                tabBarStyle: {borderTopLeftRadius: 100, borderTopRightRadius: 100},
                 headerTitle: 'Ugly Pets',
                 headerShown: false
             }}

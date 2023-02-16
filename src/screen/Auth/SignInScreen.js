@@ -36,7 +36,7 @@ export default function SignInScreen() {
     }
     
   return (
-    <View>
+    <View style={styles.signInForm}>
       <Text style={styles.screenTitle}>Connectez-vous</Text>
       <View>
             <Text>E-mail</Text>
@@ -54,6 +54,10 @@ export default function SignInScreen() {
 }
 
 const styles = StyleSheet.create({
+  signInForm: {
+    padding: 20
+  },
+
   screenTitle: {
       fontSize: 24,
       fontWeight: 'bold',
