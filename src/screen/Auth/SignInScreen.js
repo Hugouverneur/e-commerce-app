@@ -3,9 +3,13 @@ import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Entypo } from '@expo/vector-icons';
 import { auth, fireDB } from '../../../firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeUserData } from '../../../userSlice';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function SignInScreen() {
   const db = fireDB;
+  console.log(useSelector(state => state.userData));
 
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,8 +20,17 @@ export default function SignInScreen() {
       setLoaderVisible(true);
       signInWithEmailAndPassword(auth, mail, password)
         .then(userCredentials => {
-          // Todo add cresential in redux
-          console.log(userCredentials.user);
+          // getDoc(doc(db, 'users', userCredentials.user.uid))
+          //   .then(user => {
+          //     let toStoreUser = {
+          //       firstname: user.data().firstname,
+          //       lastname: user.data().lastname,
+          //       mail: user.data().mail,
+          //       uid: userCredentials.user.uid,
+          //       isAuth: true,
+          //     }
+          //     useDispatch(changeUserData(toStoreUser))
+          //   })
           setLoaderVisible(false)
         })
     }
