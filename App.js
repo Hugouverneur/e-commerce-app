@@ -5,14 +5,19 @@ import Navbar from './src/components/Navbar';
 import Header from './src/components/Header'
 import SignInScreen from './src/screen/Auth/SignInScreen';
 import store from './store';
+import { Provider } from 'react-redux';
 
-export default function App() {
+const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Header/>
-      <SignInScreen/
-      <Navbar/>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <Header/>
+        <SignInScreen/>
+        <Navbar/>
+      </SafeAreaView>
+    </Provider>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -24,3 +29,5 @@ const styles = StyleSheet.create({
 
   }
 });
+
+export default App;
