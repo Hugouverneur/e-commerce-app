@@ -1,8 +1,8 @@
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { addDoc, collection, doc, getFirestore, setDoc } from "firebase/firestore"; 
+import { addDoc, collection, getFirestore } from "firebase/firestore"; 
 import { app } from '../../../firebase';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 export default function ProductAddScreen() {
     const db = getFirestore(app);
