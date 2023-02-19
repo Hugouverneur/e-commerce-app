@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { addDoc, collection, doc, getDoc, getFirestore, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, getFirestore, getDocs } from "firebase/firestore";
 import { app } from '../../../firebase';
 import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -13,35 +13,31 @@ export default function ProductScreen(props) {
   const [product, setProduct] = useState([]);
   const [cart, setCart] = useState([])
 
-  useEffect(() => {
-    getDoc(doc(db, 'products', productId))
-      .then(docProduct => {
-        if (docProduct.exists()) setProduct(docProduct.data());
-      });
-    
-    AsyncStorage.getItem('@user_cart').then(value => {
-      if (value) setCart(value)
-    })
-    setCart([...cart, productId])
-    console.log('- - - -');
-    console.log(cart);
-  }, [])
-
   const addToCart = async () => {
-    setCart([...cart, productId]);
-    await AsyncStorage.setItem('@user_cart', JSON.stringify(cart))
+    let toAdd = {
+      products: {
+        // name: props.title,
+        image: props.image,
+        price: props.price
+      }
+    }
+    setDoc(doc(db, 'carts', 'Cem6f16K1VYr7YGpCQtG'), toAdd)
+            .then(() => setLoaderVisible(false))
   }
 
   const addToFavorite = () => {
-    console.log('add fav');
-    // Todo
+    let toAdd = {
+      favorites: ['testId']
+    }
+    setDoc(doc(db, 'users', '52Rm8nj8kPXFSLgb66P8FMmbX493'), toAdd)
+            .then(() => setLoaderVisible(false))
   }
 
   return (
     <View style={{flex: 1}}>
         <Image source={{ uri: props.image }} style={styles.image}></Image>
         <ScrollView style={styles.textSection}>
-          <Text style={styles.title}>{ props.name }</Text>
+          <Text style={styles.title}>{ props.title }</Text>
           <View style={styles.row}>
             <View style={styles.blockInfo}>
               <Text style={styles.infoText}>{ props.price }€</Text>
