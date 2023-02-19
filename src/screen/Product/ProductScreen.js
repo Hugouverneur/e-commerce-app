@@ -1,27 +1,43 @@
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { addDoc, collection, doc, getDoc, getFirestore, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, getFirestore, getDocs } from "firebase/firestore";
 import { app } from '../../../firebase';
 import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProductScreen(props) {
   const db = getFirestore(app);
 
-  const addToCart = () => {
-    console.log('add cart');
-    // Todo
+  const productId = 'EzwHQHoR0AH9fMdrPCrJ' // replace id by route id
+
+  const [product, setProduct] = useState([]);
+  const [cart, setCart] = useState([])
+
+  const addToCart = async () => {
+    let toAdd = {
+      products: {
+        // name: props.title,
+        image: props.image,
+        price: props.price
+      }
+    }
+    setDoc(doc(db, 'carts', 'Cem6f16K1VYr7YGpCQtG'), toAdd)
+            .then(() => setLoaderVisible(false))
   }
 
   const addToFavorite = () => {
-    console.log('add fav');
-    // Todo
+    let toAdd = {
+      favorites: ['testId']
+    }
+    setDoc(doc(db, 'users', '52Rm8nj8kPXFSLgb66P8FMmbX493'), toAdd)
+            .then(() => setLoaderVisible(false))
   }
 
   return (
     <View style={{flex: 1}}>
         <Image source={{ uri: props.image }} style={styles.image}></Image>
         <ScrollView style={styles.textSection}>
-          <Text style={styles.title}>{ props.name }</Text>
+          <Text style={styles.title}>{ props.title }</Text>
           <View style={styles.row}>
             <View style={styles.blockInfo}>
               <Text style={styles.infoText}>{ props.price }€</Text>

@@ -17,12 +17,19 @@ export default function ListingScreen() {
     getDocs(collection(db, 'products')) // replace id by route id
       .then(docsProducts => {
         docsProducts.forEach((doc) => {
-          productsList = [...productsList, doc.data()] 
+          let docData = {
+            id: doc.id,
+            name: doc.data().name,
+            description: doc.data().description,
+            species: doc.data().species,
+            birthDate: doc.data().birthDate,
+            price: doc.data().price,
+            image: doc.data().image
+        }
+          productsList = [...productsList, docData] 
           setProducts(productsList);
         })
       })
-
-      console.log(products[0])
   }, [])
 
   const render = (category) => {
