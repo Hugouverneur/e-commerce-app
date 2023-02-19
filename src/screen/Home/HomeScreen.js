@@ -1,10 +1,21 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
+import SignInScreen from '../Auth/SignInScreen'
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   return (
-    <View>
-      <Text>HomeScreen</Text>
+    <View style={styles.home}>
+      <SignInScreen/>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  home: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center'
+  }
+})
+
+export default HomeScreen
