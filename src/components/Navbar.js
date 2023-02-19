@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen, ListingScreen, ProductScreen } from '../screen';
+import { HomeScreen, ListingScreen, Cart } from '../screen';
 import { Icon } from '@rneui/themed';
 
 const Tab = createBottomTabNavigator();
@@ -46,7 +46,7 @@ const Navbar = (props) => {
             />
             <Tab.Screen 
                 name="Cart" 
-                component={ProductScreen} 
+                component={Cart} 
                 options={{
                     tabBarActiveTintColor: '#fd9340',
                     tabBarInactiveTintColor: '#fd9340',

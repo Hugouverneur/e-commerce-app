@@ -33,7 +33,7 @@ export default function SignUpScreen() {
     }
     
   return (
-    <View>
+    <View style={styles.signUpForm}>
       <Text style={styles.screenTitle}>Inscrivez-vous</Text>
       <View>
             <Text>Prénom</Text>
@@ -57,6 +57,10 @@ export default function SignUpScreen() {
 }
 
 const styles = StyleSheet.create({
+  signUpForm : {
+    padding: 20
+  },
+
   screenTitle: {
       fontSize: 24,
       fontWeight: 'bold',

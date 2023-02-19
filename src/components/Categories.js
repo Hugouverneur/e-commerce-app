@@ -7,7 +7,7 @@ const Categories = () => {
   return (
     <ScrollView style={styles.categories} horizontal>
         {Data.categories.map((category, index) => (
-            <TouchableOpacity style={styles.categoryItemContainer} index={index}>
+            <TouchableOpacity style={styles.categoryItemContainer} key={index}>
                 <FontAwesome5 
                     name={category.icon}
                     style={styles.categoryIcon}
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
 
     categoryText: {
         color: '#fd9340',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 12
     },
 
     categoryIcon: {

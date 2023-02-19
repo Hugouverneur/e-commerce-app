@@ -1,29 +1,59 @@
-import { StyleSheet, Text, ScrollView } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, ScrollView, View } from 'react-native'
+import React, {useEffect, useState} from 'react'
 import ListItem from '../../components/ListItem'
 import Categories from '../../components/Categories'
+import { addDoc, collection, doc, getDoc, getFirestore, getDocs } from "firebase/firestore";
+import { app } from '../../../firebase';
 
 export default function ListingScreen() {
+  const db = getFirestore(app);
+
+  const [products, setProducts] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('Tous');
+
+  useEffect(() => {
+    let productsList = []
+
+    getDocs(collection(db, 'products')) // replace id by route id
+      .then(docsProducts => {
+        docsProducts.forEach((doc) => {
+          productsList = [...productsList, doc.data()] 
+          setProducts(productsList);
+        })
+      })
+
+      console.log(products[0])
+  }, [])
+
+  const render = (category) => {
+    if(category === "Tous") {
+      return (
+        <ScrollView style={styles.list}>
+          <Text style={styles.listTitle}>Market</Text>
+          <Categories/>
+          {products.map((product, index) => (
+            <ListItem
+              title={product.name}
+              age={product.age}
+              birthdate={product.birthdate}
+              description={product.description}
+              image={product.image}
+              price={product.price}
+              species={product.species}
+              key={index}
+            />
+          ))}
+        </ScrollView>
+      )
+    }
+
+    else {
+      //
+    }
+  }
+
   return (
-    <ScrollView style={styles.list}>
-      <Text style={styles.listTitle}>Market</Text>
-      <Categories/>
-      <ListItem
-        title="Chat Egyptien"
-        description="Âgé de 1 mois, proviens du Caire en Egypte"
-        date="16/02/23"
-      />
-      <ListItem
-        title="Chat Egyptien"
-        description="Âgé de 1 mois, proviens du Caire en Egypte"
-        date="16/02/23"
-      />
-      <ListItem
-        title="Chat Egyptien"
-        description="Âgé de 1 mois, proviens du Caire en Egypte"
-        date="16/02/23"
-      />
-    </ScrollView>
+    render(selectedCategory)
   )
 }
 

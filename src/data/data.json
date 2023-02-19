@@ -1,23 +1,23 @@
 {
     "categories": [
         {
-            "name":"Dog",
+            "name":"Chien",
             "icon":"dog"
         },
         {
-            "name":"Cat",
+            "name":"Chat",
             "icon":"cat"
         },
         {
-            "name":"Fish",
+            "name":"Poisson",
             "icon":"fish"
         },
         {
-            "name":"Horse",
+            "name":"Cheval",
             "icon":"horse"
         },
         {
-            "name":"Toy",
+            "name":"Jouet",
             "icon":"bone"
         }
     ]

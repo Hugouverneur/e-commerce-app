@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Entypo } from '@expo/vector-icons';
@@ -6,10 +6,12 @@ import { auth, fireDB } from '../../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUserData } from '../../../userSlice';
 import { doc, getDoc } from 'firebase/firestore';
+import SignUpScreen from './SignUpScreen';
 
 export default function SignInScreen() {
   const db = fireDB;
   console.log(useSelector(state => state.userData));
+  const [modalVisible, setModalVisible] = useState(false);
 
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
@@ -38,7 +40,7 @@ export default function SignInScreen() {
   return (
     <View style={styles.signInForm}>
       <Text style={styles.screenTitle}>Connectez-vous</Text>
-      <View>
+        <View>
             <Text>E-mail</Text>
             <TextInput style={styles.inputs} onChangeText={value => setMail(value)}/>
             
@@ -49,6 +51,29 @@ export default function SignInScreen() {
                 {loaderVisible ? <Entypo name="dots-three-horizontal" size={42} color="white" /> : <Text style={styles.buttonText}>Se connecter</Text>}
             </TouchableOpacity>
         </View>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+    
+          <View style={styles.modalView}>
+            <SignUpScreen/>
+            <Pressable
+              style={styles.inscription}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.inscriptionText}>Vous-avez déjà un compte ?</Text>
+            </Pressable>
+          </View>
+      </Modal>
+      <Pressable
+        style={styles.inscription}
+        onPress={() => setModalVisible(true)}>
+        <Text style={styles.inscriptionText}>Vous n'êtes pas inscrits ?</Text>
+      </Pressable>
     </View>
   )
 }
@@ -81,5 +106,19 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       color: '#fff'
+  },
+  
+  inscription: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  inscriptionText: {
+    textDecorationLine: 'underline',
+    color: '#FD9340'
+  },
+  modalView: {
+    justifyContent: 'center',
+    height: '100%'
   }
 });

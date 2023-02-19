@@ -1,18 +1,50 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, Pressable } from 'react-native'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { ProductScreen } from '../screen';
+import React, {useState} from 'react'
 
 const ListItem = (props) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
-    <TouchableOpacity style={styles.listItem}>
+    <TouchableOpacity style={styles.listItem} onPress={() => setModalVisible(!modalVisible)}>
       <Image
-        source={{uri:'https://www.neozone.org/blog/wp-content/uploads/2021/05/chat-egypte-001-780x470.jpg'}}
+        source={{uri: props.image}}
         style={styles.itemImage}
       />
       <View style={styles.itemInfo}>
         <Text style={styles.itemTitle}>{props.title}</Text>
-        <Text style={styles.itemDate}>Postée le : {props.date}</Text>
+        <Text style={styles.itemDate}>Age : {props.age}</Text>
         <Text style={styles.itemDescription}>{props.description}</Text>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        style={{height: '100%'}}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+          <TouchableOpacity
+            onPress={() => setModalVisible(!modalVisible)}>
+            <FontAwesome5 
+                    name="arrow-left"
+                    size={width=30}
+                    style={{padding: 5}}
+            />
+          </TouchableOpacity>
+          <ProductScreen
+            title={props.name}
+            age={props.age}
+            birthdate={props.birthdate}
+            description={props.description}
+            image={props.image}
+            price={props.price}
+            species={props.species}
+            key={props.id}
+          />
+          
+      </Modal>
     </TouchableOpacity>
   )
 }

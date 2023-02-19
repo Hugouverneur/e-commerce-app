@@ -1,20 +1,11 @@
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { addDoc, collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getFirestore, getDocs } from "firebase/firestore";
 import { app } from '../../../firebase';
 import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function ProductScreen() {
+export default function ProductScreen(props) {
   const db = getFirestore(app);
-
-  const [product, setProduct] = useState([]);
-
-  useEffect(() => {
-    getDoc(doc(db, 'products', 'EzwHQHoR0AH9fMdrPCrJ')) // replace id by route id
-      .then(docProduct => {
-        if (docProduct.exists()) setProduct(docProduct.data());
-      });
-  }, [])
 
   const addToCart = () => {
     console.log('add cart');
@@ -28,23 +19,23 @@ export default function ProductScreen() {
 
   return (
     <View style={{flex: 1}}>
-        <Image source={{ uri: product.image }} style={styles.image}></Image>
+        <Image source={{ uri: props.image }} style={styles.image}></Image>
         <ScrollView style={styles.textSection}>
-          <Text style={styles.title}>{ product.name }</Text>
+          <Text style={styles.title}>{ props.name }</Text>
           <View style={styles.row}>
             <View style={styles.blockInfo}>
-              <Text style={styles.infoText}>{ product.price }€</Text>
+              <Text style={styles.infoText}>{ props.price }€</Text>
             </View>
             <View style={styles.blockInfo}>
-              <Text style={styles.infoText}>{ product.age } ans</Text>
+              <Text style={styles.infoText}>{ props.age } ans</Text>
             </View>
             <View style={styles.blockInfo}>
-              <Text style={styles.infoText}>{ product.species }</Text>
+              <Text style={styles.infoText}>{ props.species }</Text>
             </View>
           </View>
           <View style={styles.sectionDescrition}>
             <Text style={styles.titleSection}>Description :</Text>
-            <Text style={styles.descrition}>{ product.description }</Text>
+            <Text style={styles.descrition}>{ props.description }</Text>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={[styles.actionButton, styles.addFavorite]} onPress={() => addToFavorite()}>
