@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CartScreen() {

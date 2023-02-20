@@ -14,6 +14,11 @@ export default function ListingScreen() {
   useEffect(() => {
     let productsList = []
 
+    getDoc(doc(db, 'users', '52Rm8nj8kPXFSLgb66P8FMmbX493'))
+      .then(document => {
+        console.log(document.data())
+      })
+
     getDocs(collection(db, 'products')) // replace id by route id
       .then(docsProducts => {
         docsProducts.forEach((doc) => {

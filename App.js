@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from './src/components/Navbar';
 import Header from './src/components/Header'
