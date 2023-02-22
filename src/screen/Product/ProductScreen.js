@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { addDoc, collection, doc, setDoc, getFirestore, getDocs } from "firebase/firestore";
-import { app } from '../../../firebase';
+import { addDoc, collection, doc, setDoc, getFirestore, getDocs, updateDoc, arrayUnion } from "firebase/firestore";
+import { app, auth } from '../../../firebase';
 import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,29 +8,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function ProductScreen(props) {
   const db = getFirestore(app);
 
-  const productId = 'EzwHQHoR0AH9fMdrPCrJ' // replace id by route id
-
-  const [product, setProduct] = useState([]);
   const [cart, setCart] = useState([])
 
   const addToCart = async () => {
-    let toAdd = {
-      products: {
-        // name: props.title,
+    if(auth.currentUser != null) {
+      let productToAdd = {
+        id: props.id,
+        name: props.title,
         image: props.image,
         price: props.price
       }
+      updateDoc(doc(db, "carts", auth.currentUser.uid), {
+        products: arrayUnion(productToAdd)
+      })
+    } else {
+      console.log('Erreur: User not logged in');
     }
-    setDoc(doc(db, 'carts', 'Cem6f16K1VYr7YGpCQtG'), toAdd)
-            .then(() => setLoaderVisible(false))
   }
 
   const addToFavorite = () => {
-    let toAdd = {
-      favorites: ['testId']
+    if(auth.currentUser != null) {
+      updateDoc(doc(db, "users", auth.currentUser.uid), {
+        favorites: arrayUnion(props.id)
+      })
+    } else {
+      console.log('Erreur: User not logged in');
     }
-    setDoc(doc(db, 'users', '52Rm8nj8kPXFSLgb66P8FMmbX493'), toAdd)
-            .then(() => setLoaderVisible(false))
   }
 
   return (

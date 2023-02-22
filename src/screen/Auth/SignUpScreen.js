@@ -28,8 +28,11 @@ export default function SignUpScreen() {
           }
 
           setDoc(doc(db, 'users', userCredentials.user.uid), formData)
-            .then(() => setLoaderVisible(false))
+            .then(() => {
+              setDoc(doc(db, 'carts', userCredentials.user.uid), {products: []})
+            })
         })
+        setLoaderVisible(false)
     }
     
   return (

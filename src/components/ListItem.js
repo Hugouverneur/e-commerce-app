@@ -34,13 +34,14 @@ const ListItem = (props) => {
             />
           </TouchableOpacity>
           <ProductScreen
-            title={props.name}
+            title={props.title}
             age={props.age}
             birthdate={props.birthdate}
             description={props.description}
             image={props.image}
             price={props.price}
             species={props.species}
+            id={props.id}
             key={props.id}
           />
           
