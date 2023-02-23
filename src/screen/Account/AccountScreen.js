@@ -7,7 +7,7 @@ const AccountScreen = () => {
   return (
     <View>
         <View style={styles.accountScreen}>
-        <Icon
+            <Icon
                 name='account-circle'
                 color= '#fd9340'
                 size={50}
@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffede0',
-        margin: 20
+        margin: 20,
+        padding: 10,
+        borderRadius: 10
     },
 
     userName: {

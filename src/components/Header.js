@@ -29,7 +29,7 @@ const Header = () => {
             <FontAwesome5 
                 name="arrow-left"
                 size={20}
-                style={{padding: 5}}
+                style={{padding: 5, paddingLeft: 20}}
             />
           </TouchableOpacity>
           <View style={styles.modalView}>
