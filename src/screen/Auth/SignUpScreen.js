@@ -4,10 +4,13 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Entypo } from '@expo/vector-icons';
 import { auth, fireDB } from '../../../firebase';
 import { setDoc, doc } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
+import { initFavorite } from '../../../favoriteSlice';
 
 
 export default function SignUpScreen() {
   const db = fireDB;
+  const dispatch = useDispatch()
 
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
@@ -24,12 +27,13 @@ export default function SignUpScreen() {
             firstname: firstname,
             lastname: lastname,
             mail: mail,
-            favorite: []
+            favorites: []
           }
 
           setDoc(doc(db, 'users', userCredentials.user.uid), formData)
             .then(() => {
               setDoc(doc(db, 'carts', userCredentials.user.uid), {products: []})
+              dispatch(initFavorite([]));
             })
         })
         setLoaderVisible(false)

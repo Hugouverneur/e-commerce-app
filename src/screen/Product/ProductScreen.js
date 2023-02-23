@@ -1,12 +1,14 @@
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { addDoc, collection, doc, setDoc, getFirestore, getDocs, updateDoc, arrayUnion } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, getFirestore, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { app, auth } from '../../../firebase';
 import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector, useDispatch } from 'react-redux';
+import { initFavorite } from '../../../favoriteSlice';
 
 export default function ProductScreen(props) {
   const db = getFirestore(app);
+  const dispatch = useDispatch()
 
   const [cart, setCart] = useState([])
 
@@ -30,6 +32,26 @@ export default function ProductScreen(props) {
     if(auth.currentUser != null) {
       updateDoc(doc(db, "users", auth.currentUser.uid), {
         favorites: arrayUnion(props.id)
+      }).then(() => {
+        getDoc(doc(db, 'users', auth.currentUser.uid))
+          .then(user => {
+            dispatch(initFavorite(user.data().favorites));
+          })
+      })
+    } else {
+      console.log('Erreur: User not logged in');
+    }
+  }
+
+  const removeFavorite = () => {
+    if(auth.currentUser != null) {
+      updateDoc(doc(db, "users", auth.currentUser.uid), {
+        favorites: arrayRemove(props.id)
+      }).then(() => {
+        getDoc(doc(db, 'users', auth.currentUser.uid))
+          .then(user => {
+            dispatch(initFavorite(user.data().favorites));
+          })
       })
     } else {
       console.log('Erreur: User not logged in');
@@ -57,10 +79,18 @@ export default function ProductScreen(props) {
             <Text style={styles.descrition}>{ props.description }</Text>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={[styles.actionButton, styles.addFavorite]} onPress={() => addToFavorite()}>
-              <MaterialIcons style={styles.actionButtonIcon} name="favorite-border" size={24} color="black" />
-              {/* <MaterialIcons style={styles.actionButtonIcon} name="favorite" size={24} color="black" /> */}
-            </TouchableOpacity>
+            {useSelector(state => state.favoriteData.favorites).includes(props.id)
+              ? (
+                <TouchableOpacity style={[styles.actionButton, styles.addFavorite]} onPress={() => removeFavorite()}>
+                  <MaterialIcons style={styles.actionButtonIcon} name="favorite" size={24} color="black" />
+                </TouchableOpacity>
+              )
+              : (
+                <TouchableOpacity style={[styles.actionButton, styles.addFavorite]} onPress={() => addToFavorite()}>
+                  <MaterialIcons style={styles.actionButtonIcon} name="favorite-border" size={24} color="black" />
+                </TouchableOpacity>
+              )
+            }
             <TouchableOpacity style={[styles.actionButton, styles.addCart]} onPress={() => addToCart()}>
               <MaterialIcons style={styles.actionButtonIcon} name="add-shopping-cart" size={24} color="black" />
             </TouchableOpacity>
