@@ -3,15 +3,15 @@ import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Entypo } from '@expo/vector-icons';
 import { auth, fireDB } from '../../../firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeUserData } from '../../../userSlice';
+import { useDispatch } from 'react-redux';
 import { doc, getDoc } from 'firebase/firestore';
 import SignUpScreen from './SignUpScreen';
+import { initFavorite } from '../../../favoriteSlice';
 
 export default function SignInScreen() {
-    const db = fireDB;
-    //console.log(useSelector(state => state.userData));
-    const [modalVisible, setModalVisible] = useState(false);
+  const db = fireDB;
+  const dispatch = useDispatch()
+  const [modalVisible, setModalVisible] = useState(false);
 
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,8 +22,10 @@ export default function SignInScreen() {
       setLoaderVisible(true);
       signInWithEmailAndPassword(auth, mail, password)
         .then(userCredentials => {
-          console.log('logged')
-          setUser(userCredentials)
+          getDoc(doc(db, 'users', userCredentials.user.uid))
+            .then(user => {
+              dispatch(initFavorite(user.data().favorites));
+            })
           setLoaderVisible(false)
         })
 
