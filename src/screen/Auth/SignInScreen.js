@@ -7,11 +7,14 @@ import { useDispatch } from 'react-redux';
 import { doc, getDoc } from 'firebase/firestore';
 import SignUpScreen from './SignUpScreen';
 import { initFavorite } from '../../../favoriteSlice';
+import data from '../../data/data.json'
 
 export default function SignInScreen() {
   const db = fireDB;
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false);
+
+  console.log(data)
 
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,7 +48,7 @@ export default function SignInScreen() {
             <TextInput style={styles.inputs} secureTextEntry={true} onChangeText={value => setPassword(value)}/>
 
             <TouchableOpacity style={styles.button} onPress={() => postSignIn()}>
-                {loaderVisible ? <Entypo name="dots-three-horizontal" size={42} color="white" /> : <Text style={styles.buttonText}>Se connecter</Text>}
+                {loaderVisible ? <Entypo name="dots-three-horizontal" size={42} color="white" /> : <Text style={styles.buttonText}>{data.logScreen.connectButtonText}</Text>}
             </TouchableOpacity>
         </View>
       <Modal
@@ -53,7 +56,6 @@ export default function SignInScreen() {
         transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
     
@@ -62,14 +64,14 @@ export default function SignInScreen() {
             <Pressable
               style={styles.inscription}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.inscriptionText}>Vous-avez déjà un compte ?</Text>
+              <Text style={styles.inscriptionText}>{data.logScreen.alreadyRegisteredText}</Text>
             </Pressable>
           </View>
       </Modal>
       <Pressable
         style={styles.inscription}
         onPress={() => setModalVisible(true)}>
-        <Text style={styles.inscriptionText}>Vous n'êtes pas inscrits ?</Text>
+        <Text style={styles.inscriptionText}>{data.logScreen.notRegisteredText}</Text>
       </Pressable>
     </View>
   )

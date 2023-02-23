@@ -99,12 +99,13 @@ const styles = StyleSheet.create({
   cartScreen: {
     backgroundColor: 'white',
     height: '100%',
-    padding: 20
+    padding: 10
   },
 
   screenTitle: {
-      fontSize: 24,
-      fontWeight: 'bold',
+    fontSize: 26,
+    marginLeft: 20,
+    marginTop: 10
   },
 
   total: {

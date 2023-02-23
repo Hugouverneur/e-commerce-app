@@ -20,5 +20,12 @@
             "name":"Jouet",
             "icon":"bone"
         }
-    ]
+    ],
+
+    "logScreen": {
+        "connectButtonText": "Se connecter",
+        "inscriptionButtonText": "S'inscrire",
+        "notRegisteredText": "Vous n'êtes pas inscrits ?",
+        "alreadyRegisteredText": "Vous avez déjà un compte ?"
+    }
 }

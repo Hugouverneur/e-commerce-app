@@ -9,8 +9,6 @@ import { auth, fireDB } from '../../firebase';
 const Tab = createBottomTabNavigator();
 
 const Navbar = (props) => {
-    const [refreshing, setRefreshing] = React.useState(false);
-
     const renderNavBar = () => {
         if(auth.currentUser != undefined) {
             return(
@@ -23,7 +21,7 @@ const Navbar = (props) => {
                         }}
                     >
                         <Tab.Screen 
-                            name="Listing" 
+                            name="Market" 
                             component={ListingScreen}
                             options={{
                                 tabBarActiveTintColor: '#fd9340',

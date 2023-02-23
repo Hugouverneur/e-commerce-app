@@ -6,6 +6,7 @@ import { auth, fireDB } from '../../../firebase';
 import { setDoc, doc } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { initFavorite } from '../../../favoriteSlice';
+import data from '../../data/data.json'
 
 
 export default function SignUpScreen() {
@@ -56,7 +57,7 @@ export default function SignUpScreen() {
             <TextInput style={styles.inputs} secureTextEntry={true} onChangeText={value => setPassword(value)}/>
 
             <TouchableOpacity style={styles.button} onPress={() => postSignUp()}>
-                {loaderVisible ? <Entypo name="dots-three-horizontal" size={42} color="white" /> : <Text style={styles.buttonText}>S'inscrire</Text>}
+                {loaderVisible ? <Entypo name="dots-three-horizontal" size={42} color="white" /> : <Text style={styles.buttonText}>{data.logScreen.inscriptionButtonText}</Text>}
             </TouchableOpacity>
         </View>
     </View>
