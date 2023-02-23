@@ -3,7 +3,6 @@ import React from 'react'
 import { Feather } from '@expo/vector-icons';
 
 export default function CartItem(props) {
-
   return (
     <View style={styles.listItem}>
       <Image
@@ -14,7 +13,7 @@ export default function CartItem(props) {
         <Text style={styles.itemTitle}>{props.item.name}</Text>
         <Text style={styles.itemDescription}>{props.item.price}€</Text>
       </View>
-      <TouchableOpacity onPress={() => props.deleteItem()}><Feather name="trash-2" size={24} color="black" /></TouchableOpacity>
+      <TouchableOpacity style={styles.deleteItem} onPress={() => props.deleteItem(props.item)}><Feather name="trash-2" size={24} color="black" /></TouchableOpacity>
     </View>
   )
 }
@@ -26,6 +25,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         backgroundColor: '#FFEDE0',
+        margin: 10,
+        padding: 10,
+        borderRadius: 10
     },
     itemImage: {
         width: 86,
@@ -33,7 +35,20 @@ const styles = StyleSheet.create({
         borderRadius: 4,
     },
     itemInfo: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginLeft: 10,
+        flexDirection: 'column'
+    },
+    itemTitle: {
+      fontSize: 16,
+      fontStyle: 'italic',
+      color: '#aaaaaa'
+    },
+    itemDescription: {
+      fontSize: 16,
+      fontWeight: 'bold'
+    },
+    deleteItem: {
+      marginLeft: 100
     }
 })

@@ -1,17 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, LogBox } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from './src/components/Navbar';
 import Header from './src/components/Header'
 import store from './store';
 
 const App = () => {
+  LogBox.ignoreAllLogs()
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
         <Header/>
-
         <Navbar/>
       </SafeAreaView>
     </Provider>

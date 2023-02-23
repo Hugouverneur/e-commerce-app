@@ -9,31 +9,26 @@ import { doc, getDoc } from 'firebase/firestore';
 import SignUpScreen from './SignUpScreen';
 
 export default function SignInScreen() {
-  const db = fireDB;
-  console.log(useSelector(state => state.userData));
-  const [modalVisible, setModalVisible] = useState(false);
+    const db = fireDB;
+    //console.log(useSelector(state => state.userData));
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [user, setUser] = useState('')
     const [loaderVisible, setLoaderVisible] = useState(false);
 
     const postSignIn = () => {
       setLoaderVisible(true);
       signInWithEmailAndPassword(auth, mail, password)
         .then(userCredentials => {
-          // getDoc(doc(db, 'users', userCredentials.user.uid))
-          //   .then(user => {
-          //     let toStoreUser = {
-          //       firstname: user.data().firstname,
-          //       lastname: user.data().lastname,
-          //       mail: user.data().mail,
-          //       uid: userCredentials.user.uid,
-          //       isAuth: true,
-          //     }
-          //     useDispatch(changeUserData(toStoreUser))
-          //   })
+          console.log('logged')
+          setUser(userCredentials)
           setLoaderVisible(false)
+        })
+
+        .catch(err => {
+          console.log(err)
         })
     }
     

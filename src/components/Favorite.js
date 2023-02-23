@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, Pressable } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { ProductScreen } from '../screen';
 import React, {useState} from 'react'
 
 const Favorite = (props) => {
