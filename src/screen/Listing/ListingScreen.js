@@ -26,6 +26,7 @@ export default function ListingScreen() {
             id: doc.id,
             name: doc.data().name,
             description: doc.data().description,
+            age: doc.data().age,
             species: doc.data().species,
             birthDate: doc.data().birthDate,
             price: doc.data().price,
@@ -52,6 +53,7 @@ export default function ListingScreen() {
               image={product.image}
               price={product.price}
               species={product.species}
+              id={product.id}
               key={index}
             />
           ))}
